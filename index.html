@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Escort Solutions | शेतकरी मार्गदर्शक</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', 'Noto Sans', 'Noto Sans Devanagari', sans-serif; background-color: #f3f4f6; }
+        .marathi { font-family: 'Noto Sans Devanagari', sans-serif; }
+        .main-card { background-color: #ffffff; border-radius: 1.5rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); position: relative; overflow: hidden; }
+        .tab-button { display: flex; flex-shrink: 0; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; font-size: 0.875rem; }
+        .tab-button.active { background-color: #16a34a; color: white; box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25); }
+        .tab-button:not(.active) { background-color: #e5e7eb; color: #4b5563; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .accordion-item { border-bottom: 1px solid #e5e7eb; }
+        .accordion-header { cursor: pointer; padding: 1rem; display: flex; justify-content: space-between; align-items: center; background-color: #f9fafb; transition: background-color 0.2s; }
+        .accordion-header:hover { background-color: #f3f4f6; }
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 1rem; background-color: #ffffff; }
+        .accordion-content-inner { padding: 1rem 0; }
+        .accordion-icon { transition: transform 0.3s; }
+        .accordion-item.active .accordion-icon { transform: rotate(180deg); }
+        .gemini-btn {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            transition: all 0.3s;
+        }
+        .gemini-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 10px rgba(79, 70, 229, 0.3);
+        }
+        .gemini-btn:disabled {
+            background: #a5b4fc;
+            cursor: not-allowed;
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .spinner {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .message-box { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        .message-box-content { background-color: #fff; margin: auto; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 90%; max-width: 400px; text-align: center; }
+        .message-box-close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .voice-btn {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 0.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .voice-btn:hover { background-color: #e5e7eb; }
+        .voice-btn.recording {
+            background-color: #ef4444;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .lang-selector {
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 0.25rem;
+            border-radius: 0.5rem;
+        }
+        .lang-btn {
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            color: white;
+        }
+        .lang-btn.active {
+            background-color: white;
+            color: #16a34a;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .main-banner {
+            height: 200px;
+            background: linear-gradient(to right, rgb(22 163 74), rgb(34 197 94));
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .guide-crop-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4">
+
+    <!-- Main App Container -->
+    <div id="app-container" class="container mx-auto max-w-5xl">
+         <div class="main-card p-0 sm:p-0">
+            <div class="main-banner">
+                <div id="lang-selector" class="lang-selector absolute top-2 right-5 z-10 flex gap-2">
+                    <button class="lang-btn active" data-lang="mr">मराठी</button>
+                    <button class="lang-btn" data-lang="hi">हिंदी</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
+                </br>
+                <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold" data-lang-key="companyName">Agro Escort Solutions Private Limited</h1>
+                <p class="text-2xl sm:text-3xl lg:text-4xl font-bold mt-1" data-lang-key="appTitle">संपूर्ण शेतकरी मार्गदर्शक</p>
+            </div>
+            <div class="p-4 sm:p-6">
+                <!-- Tabs -->
+                <div class="flex overflow-x-auto pb-4 scrollbar-hide xl:justify-center xl:overflow-visible xl:pb-0 gap-2 sm:gap-3 mb-6">
+                    <button class="tab-button active" data-tab="guide">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 4.293a1 1 0 011.414 1.414l-13 13A1 1 0 013 18H2a1 1 0 01-1-1v-1a1 1 0 01.293-.707l10-10 3-3a1 1 0 011.414 0zM9 13.586V12a1 1 0 112 0v1.586l-1 1-1-1z" /></svg>
+                        <span data-lang-key="tabGuide">पीक मार्गदर्शक</span>
+                    </button>
+                    <button class="tab-button" data-tab="products">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 2a1 1 0 011 1v1h8V3a1 1 0 112 0v1h1a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V6a2 2 0 012-2h1V3a1 1 0 011-1zm10 4H5v10h10V6z" clip-rule="evenodd" /></svg>
+                        <span data-lang-key="tabProducts">आमची उत्पादने</span>
+                    </button>
+                    <button class="tab-button" data-tab="schemes">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        <span data-lang-key="tabSchemes">सरकारी योजना</span>
+                    </button>
+                    <button class="tab-button" data-tab="expert">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /></svg>
+                        <span data-lang-key="tabExpert">कृषी डॉक्टर</span>
+                    </button>
+                    <button class="tab-button" data-tab="forum">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003 15v1a1 1 0 001 1h12a1 1 0 001-1v-1a1 1 0 00-.293-.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg>
+                        <span data-lang-key="tabForum">AI कृषी सहायक</span>
+                    </button>
+                    <button class="tab-button" data-tab="tools">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
+                        <span data-lang-key="tabTools">साधने</span>
+                    </button>
+                </div>
+                <!-- Tab Content -->
+                <div id="tab-contents">
+                    <div id="guide" class="tab-content active">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="space-y-4">
+                                <h2 class="text-xl font-bold text-gray-800 marathi border-b pb-2" data-lang-key="guideFormTitle">तुमची माहिती भरा</h2>
+                                <div>
+                                    <label for="area" class="block text-sm font-medium text-gray-700" data-lang-key="guideAreaLabel">तुमचे एकूण क्षेत्रफळ</label>
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <input type="number" id="area" class="flex-1 block w-full rounded-none rounded-l-md border-gray-300 focus:ring-green-500 focus:border-green-500 p-2" data-lang-key-placeholder="guideAreaPlaceholder">
+                                        <select id="unit" class="inline-flex items-center px-3 rounded-r-md border border-l-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                            <option value="acre" data-lang-key="unitAcre">एकर</option>
+                                            <option value="hectare" data-lang-key="unitHectare">हेक्टर</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="cropNameInput" class="block text-sm font-medium text-gray-700" data-lang-key="guideCropLabel">तुमचे पीक</label>
+                                    <input type="text" id="cropNameInput" class="mt-1 block w-full p-2 border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500" data-lang-key-placeholder="guideCropPlaceholder">
+                                </div>
+                                <div>
+                                    <button id="calculateBtn" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2.5 px-4 rounded-md shadow-lg text-lg flex items-center justify-center" data-lang-key="guideSubmitButton">माहिती मिळवा</button>
+                                </div>
+                            </div>
+                            <div id="result" class="hidden">
+                                <div id="guide-image-container" class="guide-crop-image">
+                                    <span data-lang-key="generatingImage">आम्ही काही क्षणा मधे तुमचे एकूण क्षेत्रफळ आणि तुमच्या पिकानुसार माहिती देत आहोत...</span>
+                                </div>
+                                <div id="guide-container" class="border border-gray-200 rounded-lg overflow-hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="products" class="tab-content">
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="productsTitle">आमची कृषी उत्पादने</h2>
+                        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <!-- Product cards will be inserted here by JavaScript -->
+                        </div>
+                    </div>
+                    <div id="schemes" class="tab-content">
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="schemesTitle">AI योजना सहायक</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold mb-2" data-lang-key="schemesFormTitle">शासकीय योजनेबद्दल माहिती विचारा</h3>
+                            <div class="flex items-center gap-2">
+                                <textarea id="schemeQuestion" class="w-full p-2 border rounded-md" rows="3" data-lang-key-placeholder="schemesFormPlaceholder"></textarea>
+                                <button id="voiceScheme" class="voice-btn" data-lang-key-title="voiceInputTitle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v3a3 3 0 01-3 3z" /></svg>
+                                </button>
+                            </div>
+                            <button id="askScheme" class="mt-2 w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="schemesSubmitButton">माहिती मिळवा</button>
+                        </div>
+                        <div id="schemeResponseContainer" class="hidden mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                            <h4 class="font-bold text-indigo-800" data-lang-key="schemesResponseTitle">✨ योजनेबद्दल माहिती</h4>
+                            <div id="schemeResponseResult" class="text-sm text-gray-700 mt-2 whitespace-pre-wrap"></div>
+                        </div>
+                    </div>
+                    <div id="expert" class="tab-content">
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="expertTitle">✨ कृषी डॉक्टर</h2>
+                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold mb-2" data-lang-key="expertFormTitle">तुमचा प्रश्न किंवा पिकाचा फोटो अपलोड करा</h3>
+                            <textarea id="expertQuestion" class="w-full p-2 border rounded-md" rows="2" data-lang-key-placeholder="expertFormPlaceholder"></textarea>
+                            <div class="mt-2">
+                                <label for="diseaseImage" class="block text-sm font-medium text-gray-700" data-lang-key="expertImageLabel">रोगाचा फोटो अपलोड करा (ऐच्छिक)</label>
+                                <input type="file" id="diseaseImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
+                                 <img id="imagePreview" src="" alt="Image Preview" class="hidden mt-2 rounded-lg max-h-40"/>
+                            </div>
+                            <button id="getAiAdvice" class="w-full bg-green-600 hover:bg-green-700 mt-4 gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="expertSubmitButton">
+                                निदान आणि सल्ला मिळवा
+                            </button>
+                        </div>
+                        <div id="aiAdviceContainer" class="hidden mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                            <h4 class="font-bold text-indigo-800" data-lang-key="expertResponseTitle">✨ तज्ञांनी दिलेला सल्ला</h4>
+                            <div id="aiAdviceResult" class="text-sm text-gray-700 mt-2 whitespace-pre-wrap"></div>
+                        </div>
+                    </div>
+                     <div id="forum" class="tab-content">
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="forumTitle">AI कृषी सहायक</h2>
+                        <div class="bg-gray-50 p-4 rounded-lg mb-6">
+                            <h3 class="font-semibold mb-2" data-lang-key="forumFormTitle">तुमचा कोणताही शेतीविषयक प्रश्न विचारा</h3>
+                            <div class="flex items-center gap-2">
+                                <textarea id="forumQuestion" class="w-full p-2 border rounded-md" rows="3" data-lang-key-placeholder="forumFormPlaceholder"></textarea>
+                                <button id="voiceForum" class="voice-btn" data-lang-key-title="voiceInputTitle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v3a3 3 0 01-3 3z" /></svg>
+                                </button>
+                            </div>
+                            <button id="askGeminiForum" class="mt-2 w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="forumSubmitButton">उत्तर मिळवा</button>
+                        </div>
+                        <div id="forumResponseContainer" class="hidden mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                            <h4 class="font-bold text-indigo-800" data-lang-key="forumResponseTitle">✨ AI ने दिलेले उत्तर</h4>
+                            <div id="forumResponseResult" class="text-sm text-gray-700 mt-2 whitespace-pre-wrap"></div>
+                        </div>
+                    </div>
+                    <div id="tools" class="tab-content">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="toolsCalendarTitle">✨ AI पीक कॅलेंडर</h2>
+                                 <div class="space-y-3">
+                                     <label for="calendarCropInput" class="text-sm font-medium text-gray-700" data-lang-key="toolsCalendarCropLabel">तुमचे पीक</label>
+                                     <input type="text" id="calendarCropInput" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsCalendarCropPlaceholder">
+                                     <label for="sowingDate" class="text-sm font-medium text-gray-700" data-lang-key="toolsCalendarDateLabel">पेरणीची तारीख निवडा</label>
+                                     <input type="date" id="sowingDate" class="w-full p-2 border rounded-md">
+                                     <button id="generateCalendarBtn" class="w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="toolsCalendarSubmitButton">कॅलेंडर तयार करा</button>
+                                     <div id="generatedCalendarResult" class="hidden mt-4 p-4 bg-white border rounded-lg text-sm whitespace-pre-wrap"></div>
+                                 </div>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="toolsSoilTitle">✨ माती परीक्षण विश्लेषण</h2>
+                                <div class="space-y-3">
+                                    <input type="number" id="soilPh" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilPhPlaceholder">
+                                    <input type="number" id="soilN" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilNPlaceholder">
+                                    <input type="number" id="soilP" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilPPlaceholder">
+                                    <input type="number" id="soilK" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilKPlaceholder">
+                                    <button id="analyzeSoil" class="w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="toolsSoilSubmitButton">विश्लेषण करा</button>
+                                    <div id="soilAnalysisResult" class="hidden mt-4 p-4 bg-white border rounded-lg text-sm whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="text-center text-sm text-gray-500 mt-8" data-lang-key="footerText">
+                    © 2025 Agro Escort Solutions Private Limited. All Rights Reserved.
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Box HTML -->
+    <div id="messageBox" class="message-box">
+        <div class="message-box-content">
+            <span id="messageBoxClose" class="message-box-close">&times;</span>
+            <p id="messageText" class="text-lg"></p>
+        </div>
+    </div>
+
+    <!-- App Logic -->
+    <script type="module">
+        // --- DATA & TRANSLATIONS ---
+        const productKeys = [
+            'boron20', 'mycoSpider', 'aesplVbm', 'ayursoul1Ltr', 'ayursoul500ml',
+            'ayursoul250ml', 'ayursoul100ml', 'aesplSargassum', 'wellStick',
+            'oxical1Ltr', 'oxical500ml', 'oxical250ml', 'oxical100ml'
+        ];
+
+        const translations = {
+            mr: {
+                companyName: "अग्रो एस्कॉर्ट सोल्यूशन्स प्राइवेट लिमिटेड ",
+                appTitle: "संपूर्ण शेतकरी मार्गदर्शक",
+                footerText: "© 2025 Agro Escort Solutions Private Limited. सर्व हक्क राखीव.",
+                tabGuide: "पीक मार्गदर्शक",
+                tabProducts: "आमची उत्पादने",
+                tabSchemes: "सरकारी योजना",
+                tabExpert: "कृषी डॉक्टर",
+                tabForum: "AI कृषी सहायक",
+                tabTools: "साधने",
+                guideFormTitle: "तुमची माहिती भरा",
+                guideAreaLabel: "तुमचे एकूण क्षेत्रफळ",
+                guideAreaPlaceholder: "उदा. 5",
+                unitAcre: "एकर",
+                unitHectare: "हेक्टर",
+                guideCropLabel: "तुमचे पीक",
+                guideCropPlaceholder: "उदा. कापूस, सोयाबीन, टोमॅटो",
+                guideSubmitButton: "माहिती मिळवा",
+                productsTitle: "आमची कृषी उत्पादने",
+                schemesTitle: "AI योजना सहायक",
+                schemesFormTitle: "शासकीय योजनेबद्दल माहिती विचारा",
+                schemesFormPlaceholder: "उदा. पीएम किसान योजनेसाठी पात्रता काय आहे?",
+                schemesSubmitButton: "माहिती मिळवा",
+                schemesResponseTitle: "✨ योजनेबद्दल माहिती",
+                expertTitle: "✨ कृषी डॉक्टर",
+                expertFormTitle: "तुमचा प्रश्न किंवा पिकाचा फोटो अपलोड करा",
+                expertFormPlaceholder: "तुमची समस्या लिहा... उदा. माझ्या कापसाची पाने पिवळी पडत आहेत, काय करू?",
+                expertImageLabel: "रोगाचा फोटो अपलोड करा (ऐच्छिक)",
+                expertSubmitButton: "निदान आणि सल्ला मिळवा",
+                expertResponseTitle: "✨ तज्ञांनी दिलेला सल्ला",
+                forumTitle: "AI कृषी सहायक",
+                forumFormTitle: "तुमचा कोणताही शेतीविषयक प्रश्न विचारा",
+                forumFormPlaceholder: "उदा. रब्बी हंगामासाठी कोणती पिके फायदेशीर ठरतील?",
+                forumSubmitButton: "उत्तर मिळवा",
+                forumResponseTitle: "✨ AI ने दिलेले उत्तर",
+                toolsCalendarTitle: "✨ AI पीक कॅलेंडर",
+                toolsCalendarCropLabel: "तुमचे पीक",
+                toolsCalendarCropPlaceholder: "उदा. गहू, हरभरा",
+                toolsCalendarDateLabel: "पेरणीची तारीख निवडा",
+                toolsCalendarSubmitButton: "कॅलेंडर तयार करा",
+                toolsSoilTitle: "✨ माती परीक्षण विश्लेषण",
+                toolsSoilPhPlaceholder: "मातीचा pH (उदा. 7.2)",
+                toolsSoilNPlaceholder: "नत्र (N) kg/ha (उदा. 250)",
+                toolsSoilPPlaceholder: "स्फुरद (P) kg/ha (उदा. 20)",
+                toolsSoilKPlaceholder: "पालाश (K) kg/ha (उदा. 300)",
+                toolsSoilSubmitButton: "विश्लेषण करा",
+                voiceInputTitle: "बोलून विचारा",
+                langName: "मराठी",
+                productUsageTitle: "वापर कसा करावा:",
+                aiGuideTitle: (cropName) => `"${cropName}" पिकासाठी AI सल्ला`,
+                calendarResultTitle: (cropName) => `<strong>${cropName} पिकासाठी तयार केलेले कॅलेंडर:</strong><br><br>`,
+                soilResultTitle: "<strong>माती परीक्षण अहवालानुसार सल्ला:</strong><br><br>",
+                processing: "प्रक्रिया होत आहे...",
+                getInfo: "माहिती मिळवत आहे...",
+                getAnswer: "उत्तर मिळवत आहे...",
+                getAdvice: "सल्ला मिळवत आहे...",
+                createCalendar: "कॅलेंडर तयार होत आहे...",
+                analyzing: "विश्लेषण होत आहे...",
+                loadingInfo: "माहिती लोड होत आहे...",
+                generatingImage: "AI फोटो तयार करत आहे...",
+                boron20_name: "बोरॉन २०%",
+                boron20_desc: "हे एक उच्च-गुणवत्तेचे, पाण्यात पूर्णपणे विरघळणारे बोरॉनयुक्त सूक्ष्म अन्नद्रव्य आहे. हे फुलांची आणि फळांची सेटिंग सुधारते, फळांना तडे जाण्यापासून वाचवते आणि पिकांची गुणवत्ता वाढवते.",
+                boron20_usage: "फवारणीसाठी: १-२ ग्रॅम प्रति लिटर पाण्यात मिसळून वापरा. ठिबक सिंचनाद्वारे: ५०० ग्रॅम ते १ किलो प्रति एकर जमिनीच्या प्रकारानुसार द्या.",
+                mycoSpider_name: "मायको स्पायडर",
+                mycoSpider_desc: "हे एक जैविक कीटकनाशक आहे जे कोळी आणि इतर रसशोषक किडींवर प्रभावी नियंत्रण मिळवते. हे मित्र-कीटकांसाठी सुरक्षित आहे आणि पिकांवर कोणताही रासायनिक अवशेष सोडत नाही.",
+                mycoSpider_usage: "फवारणीसाठी: २-३ मिली प्रति लिटर पाण्यात मिसळून पानांच्या दोन्ही बाजूंना व्यवस्थित फवारा. प्रादुर्भाव जास्त असल्यास १०-१२ दिवसांच्या अंतराने पुन्हा फवारणी करा.",
+                aesplVbm_name: "एईएसपीएल VBM",
+                aesplVbm_desc: "हे वनस्पती-आधारित जीवनसत्त्वे, बायो-एन्झाइम्स आणि सूक्ष्म अन्नद्रव्यांचे एक अद्वितीय मिश्रण आहे. हे पिकाच्या चयापचय क्रियेला गती देते, ज्यामुळे वाढ जोमदार होते आणि उत्पादन वाढते.",
+                aesplVbm_usage: "फवारणीसाठी: १.५ मिली प्रति लिटर पाण्यात मिसळा. पिकाच्या वाढीच्या आणि फुलोऱ्याच्या अवस्थेत वापरा.",
+                ayursoul_desc: "हे एक आयुर्वेदिक वनस्पती अर्क-आधारित वाढ-उत्तेजक आहे. हे पिकांची नैसर्गिक रोगप्रतिकारशक्ती वाढवते आणि त्यांना जैविक आणि अजैविक तणावापासून वाचवते.",
+                ayursoul_usage: "फवारणीसाठी: २ मिली प्रति लिटर पाण्यात मिसळा. जमिनीतून देण्यासाठी: १ लिटर प्रति एकर वापरा.",
+                ayursoul1Ltr_name: "आयुर्सोल 1 Ltr",
+                ayursoul500ml_name: "आयुर्सोल 500ml",
+                ayursoul250ml_name: "आयुर्सोल 250ml",
+                ayursoul100ml_name: "आयुर्सोल 100ml",
+                aesplSargassum_name: "एईएसपीएल सरगॅसम",
+                aesplSargassum_desc: "हे सरगॅसम समुद्री शेवाळापासून बनवलेले एक सेंद्रिय उत्पादन आहे. यात नैसर्गिक सायटोकिनिन्स, ऑक्सिन्स आणि जिबरेलिन्स असतात, जे मुळांची वाढ, फुटवे आणि फळांचा आकार वाढवण्यासाठी मदत करतात.",
+                aesplSargassum_usage: "फवारणीसाठी: २-३ मिली प्रति लिटर पाण्यात मिसळा. ठिबकद्वारे: १ लिटर प्रति एकर द्या.",
+                wellStick_name: "वेल-स्टिक",
+                wellStick_desc: "हे एक उच्च-दर्जाचे स्टिकर, स्प्रेडर आणि पेनिट्रेटर आहे. कोणत्याही कीटकनाशक, बुरशीनाशक किंवा खतांसोबत वापरल्यास, ते पानांवर औषध समान रीतीने पसरवते आणि चिकटवून ठेवते, ज्यामुळे औषधाची कार्यक्षमता वाढते.",
+                wellStick_usage: "कोणत्याही फवारणीच्या द्रावणात ०.५ मिली प्रति लिटर या प्रमाणात मिसळा.",
+                oxical_desc: "हे कॅल्शियम आणि इतर आवश्यक सूक्ष्म अन्नद्रव्यांचे एक संतुलित मिश्रण आहे. हे पेशींची भिंत मजबूत करते, फळांची साठवण क्षमता वाढवते आणि 'ब्लॉसम एंड रॉट' सारख्या विकृतींना प्रतिबंधित करते.",
+                oxical_usage: "फवारणीसाठी: २-३ मिली प्रति लिटर पाण्यात मिसळा. फळधारणेच्या अवस्थेत वापरणे विशेषतः फायदेशीर आहे.",
+                oxical1Ltr_name: "ऑक्सिकॅल 1 Ltr",
+                oxical500ml_name: "ऑक्सिकॅल 500ml",
+                oxical250ml_name: "ऑक्सिकॅल 250ml",
+                oxical100ml_name: "ऑक्सिकॅल 100ml",
+            },
+            hi: {
+                companyName: "एग्रो एस्कॉर्ट सॉल्यूशंस प्राइवेट लिमिटेड",
+                appTitle: "संपूर्ण किसान गाइड",
+                footerText: "© 2025 एग्रो एस्कॉर्ट सॉल्यूशंस प्राइवेट लिमिटेड। सर्वाधिकार सुरक्षित।",
+                appSubtitle: "आपका AI कृषि सहायक",
+                tabGuide: "फ़सल गाइड",
+                tabProducts: "हमारे उत्पाद",
+                tabSchemes: "सरकारी योजनाएं",
+                tabExpert: "कृषि डॉक्टर",
+                tabForum: "AI कृषि सहायक",
+                tabTools: "उपकरण",
+                guideFormTitle: "अपनी जानकारी भरें",
+                guideAreaLabel: "आपका कुल क्षेत्रफल",
+                guideAreaPlaceholder: "उदा. 5",
+                unitAcre: "एकड़",
+                unitHectare: "हेक्टेयर",
+                guideCropLabel: "आपकी फ़सल",
+                guideCropPlaceholder: "उदा. कपास, सोयाबीन, टमाटर",
+                guideSubmitButton: "जानकारी प्राप्त करें",
+                productsTitle: "हमारे कृषि उत्पाद",
+                schemesTitle: "AI योजना सहायक",
+                schemesFormTitle: "सरकारी योजना के बारे में पूछें",
+                schemesFormPlaceholder: "उदा. पीएम किसान योजना के लिए पात्रता क्या है?",
+                schemesSubmitButton: "जानकारी प्राप्त करें",
+                schemesResponseTitle: "✨ योजना के बारे में जानकारी",
+                expertTitle: "✨ कृषि डॉक्टर",
+                expertFormTitle: "अपना प्रश्न या फ़सल का फ़ोटो अपलोड करें",
+                expertFormPlaceholder: "अपनी समस्या लिखें... उदा. मेरे कपास के पत्ते पीले पड़ रहे हैं, क्या करें?",
+                expertImageLabel: "रोग का फ़ोटो अपलोड करें (वैकल्पिक)",
+                expertSubmitButton: "निदान और सलाह पाएं",
+                expertResponseTitle: "✨ विशेषज्ञों द्वारा दी गई सलाह",
+                forumTitle: "AI कृषि सहायक",
+                forumFormTitle: "अपना कोई भी कृषि संबंधी प्रश्न पूछें",
+                forumFormPlaceholder: "उदा. रबी सीजन के लिए कौन सी फसलें फायदेमंद हैं?",
+                forumSubmitButton: "उत्तर पाएं",
+                forumResponseTitle: "✨ AI द्वारा दिया गया उत्तर",
+                toolsCalendarTitle: "✨ AI फ़सल कैलेंडर",
+                toolsCalendarCropLabel: "आपकी फ़सल",
+                toolsCalendarCropPlaceholder: "उदा. गेहूं, चना",
+                toolsCalendarDateLabel: "बुवाई की तारीख चुनें",
+                toolsCalendarSubmitButton: "कैलेंडर बनाएं",
+                toolsSoilTitle: "✨ मिट्टी परीक्षण विश्लेषण",
+                toolsSoilPhPlaceholder: "मिट्टी का pH (उदा. 7.2)",
+                toolsSoilNPlaceholder: "नाइट्रोजन (N) kg/ha (उदा. 250)",
+                toolsSoilPPlaceholder: "फॉस्फोरस (P) kg/ha (उदा. 20)",
+                toolsSoilKPlaceholder: "पोटेशियम (K) kg/ha (उदा. 300)",
+                toolsSoilSubmitButton: "विश्लेषण करें",
+                voiceInputTitle: "बोलकर पूछें",
+                langName: "हिंदी",
+                productUsageTitle: "उपयोग कैसे करें:",
+                aiGuideTitle: (cropName) => `"${cropName}" फ़सल के लिए AI सलाह`,
+                calendarResultTitle: (cropName) => `<strong>${cropName} फ़सल के लिए बनाया गया कैलेंडर:</strong><br><br>`,
+                soilResultTitle: "<strong>मिट्टी परीक्षण रिपोर्ट के अनुसार सलाह:</strong><br><br>",
+                processing: "प्रगति पर है...",
+                getInfo: "जानकारी मिल रही है...",
+                getAnswer: "उत्तर मिल रहा है...",
+                getAdvice: "सलाह मिल रही है...",
+                createCalendar: "कैलेंडर बन रहा है...",
+                analyzing: "विश्लेषण हो रहा है...",
+                loadingInfo: "जानकारी लोड हो रही है...",
+                generatingImage: "AI फोटो बना रहा है...",
+                boron20_name: "बोरॉन २०%",
+                boron20_desc: "यह एक उच्च-गुणवत्ता, पानी में पूरी तरह से घुलनशील बोरॉन युक्त सूक्ष्म पोषक तत्व है। यह फूलों और फलों की सेटिंग में सुधार करता है, फलों को फटने से बचाता है और फसल की गुणवत्ता बढ़ाता है।",
+                boron20_usage: "छिड़काव के लिए: 1-2 ग्राम प्रति लीटर पानी में मिलाएं। ड्रिप सिंचाई के माध्यम से: 500 ग्राम से 1 किलो प्रति एकड़ मिट्टी के प्रकार के अनुसार दें।",
+                mycoSpider_name: "माइको स्पाइडर",
+                mycoSpider_desc: "यह एक जैविक कीटनाशक है जो मकड़ियों और अन्य रस चूसने वाले कीटों पर प्रभावी नियंत्रण प्रदान करता है। यह मित्र-कीटों के लिए सुरक्षित है और फसलों पर कोई रासायनिक अवशेष नहीं छोड़ता है।",
+                mycoSpider_usage: "छिड़काव के लिए: 2-3 मिली प्रति लीटर पानी में मिलाकर पत्तियों के दोनों तरफ अच्छी तरह से छिड़काव करें। संक्रमण अधिक होने पर 10-12 दिनों के अंतराल पर दोहराएं।",
+                aesplVbm_name: "एईएसपीएल VBM",
+                aesplVbm_desc: "यह पौधे-आधारित विटामिन, बायो-एंजाइम और सूक्ष्म पोषक तत्वों का एक अनूठा मिश्रण है। यह फसल के चयापचय को तेज करता है, जिससे जोरदार विकास और उपज में वृद्धि होती है।",
+                aesplVbm_usage: "छिड़काव के लिए: 1.5 मिली प्रति लीटर पानी में मिलाएं। फसल की वृद्धि और फूल आने की अवस्था में उपयोग करें।",
+                ayursoul_desc: "यह एक आयुर्वेदिक पौधे के अर्क पर आधारित विकास-प्रवर्तक है। यह फसलों की प्राकृतिक प्रतिरक्षा को बढ़ाता है और उन्हें जैविक और अजैविक तनाव से बचाता है।",
+                ayursoul_usage: "छिड़काव के लिए: 2 मिली प्रति लीटर पानी में मिलाएं। मिट्टी के माध्यम से देने के लिए: 1 लीटर प्रति एकड़ का उपयोग करें।",
+                ayursoul1Ltr_name: "आयुरसोल 1 Ltr",
+                ayursoul500ml_name: "आयुरसोल 500ml",
+                ayursoul250ml_name: "आयुरसोल 250ml",
+                ayursoul100ml_name: "आयुरसोल 100ml",
+                aesplSargassum_name: "एईएसपीएल सरगैसम",
+                aesplSargassum_desc: "यह सरगैसम समुद्री शैवाल से बना एक जैविक उत्पाद है। इसमें प्राकृतिक साइटोकिनिन, ऑक्सिन और जिबरेलिन होते हैं, जो जड़ों के विकास, टिलरिंग और फलों के आकार को बढ़ाने में मदद करते हैं।",
+                aesplSargassum_usage: "छिड़काव के लिए: 2-3 मिली प्रति लीटर पानी में मिलाएं। ड्रिप के माध्यम से: 1 लीटर प्रति एकड़ दें।",
+                wellStick_name: "वेल-स्टिक",
+                wellStick_desc: "यह एक उच्च-गुणवत्ता वाला स्टिकर, स्प्रेडर और पेनिट्रेटर है। किसी भी कीटनाशक, फफूंदनाशक या उर्वरक के साथ उपयोग किए जाने पर, यह दवा को पत्तियों पर समान रूप से फैलाता और चिपकाता है, जिससे दवा की प्रभावशीलता बढ़ जाती है।",
+                wellStick_usage: "किसी भी स्प्रे घोल में 0.5 मिली प्रति लीटर की दर से मिलाएं।",
+                oxical_desc: "यह कैल्शियम और अन्य आवश्यक सूक्ष्म पोषक तत्वों का एक संतुलित मिश्रण है। यह कोशिका भित्ति को मजबूत करता है, फलों की भंडारण क्षमता को बढ़ाता है और 'ब्लॉसम एंड रॉट' जैसी विकृतियों को रोकता है।",
+                oxical_usage: "छिड़काव के लिए: 2-3 मिली प्रति लीटर पानी में मिलाएं। फल लगने की अवस्था में उपयोग करना विशेष रूप से फायदेमंद है।",
+                oxical1Ltr_name: "ऑक्सिकैल 1 Ltr",
+                oxical500ml_name: "ऑक्सिकैल 500ml",
+                oxical250ml_name: "ऑक्सिकैल 250ml",
+                oxical100ml_name: "ऑक्सिकैल 100ml",
+            },
+            en: {
+                companyName: "Agro Escort Solutions Private Limited",
+                appTitle: "Complete Farmer Guide",
+                footerText: "© 2025 Agro Escort Solutions Private Limited. All Rights Reserved.",
+                appSubtitle: "Your AI Agri Assistant",
+                tabGuide: "Crop Guide",
+                tabProducts: "Our Products",
+                tabSchemes: "Govt. Schemes",
+                tabExpert: "Agri Doctor",
+                tabForum: "AI Agri Assistant",
+                tabTools: "Tools",
+                guideFormTitle: "Fill Your Information",
+                guideAreaLabel: "Your Total Area",
+                guideAreaPlaceholder: "e.g., 5",
+                unitAcre: "Acre",
+                unitHectare: "Hectare",
+                guideCropLabel: "Your Crop",
+                guideCropPlaceholder: "e.g., Cotton, Soybean, Tomato",
+                guideSubmitButton: "Get Information",
+                productsTitle: "Our Agri Products",
+                schemesTitle: "AI Scheme Assistant",
+                schemesFormTitle: "Ask About a Government Scheme",
+                schemesFormPlaceholder: "e.g., What is the eligibility for the PM Kisan scheme?",
+                schemesSubmitButton: "Get Information",
+                schemesResponseTitle: "✨ Information About the Scheme",
+                expertTitle: "✨ Agri Doctor",
+                expertFormTitle: "Upload your question or crop photo",
+                expertFormPlaceholder: "Write your problem... e.g., My cotton leaves are turning yellow, what should I do?",
+                expertImageLabel: "Upload disease photo (Optional)",
+                expertSubmitButton: "Get Diagnosis and Advice",
+                expertResponseTitle: "✨ Advice from the Expert",
+                forumTitle: "AI Agri Assistant",
+                forumFormTitle: "Ask any agriculture-related question",
+                forumFormPlaceholder: "e.g., Which crops are profitable for the Rabi season?",
+                forumSubmitButton: "Get Answer",
+                forumResponseTitle: "✨ Answer from AI",
+                toolsCalendarTitle: "✨ AI Crop Calendar",
+                toolsCalendarCropLabel: "Your Crop",
+                toolsCalendarCropPlaceholder: "e.g., Wheat, Gram",
+                toolsCalendarDateLabel: "Select Sowing Date",
+                toolsCalendarSubmitButton: "Create Calendar",
+                toolsSoilTitle: "✨ Soil Test Analysis",
+                toolsSoilPhPlaceholder: "Soil pH (e.g., 7.2)",
+                toolsSoilNPlaceholder: "Nitrogen (N) kg/ha (e.g., 250)",
+                toolsSoilPPlaceholder: "Phosphorus (P) kg/ha (e.g., 20)",
+                toolsSoilKPlaceholder: "Potassium (K) kg/ha (e.g., 300)",
+                toolsSoilSubmitButton: "Analyze",
+                voiceInputTitle: "Ask with Voice",
+                langName: "English",
+                productUsageTitle: "How to use:",
+                aiGuideTitle: (cropName) => `AI Advice for "${cropName}" Crop`,
+                calendarResultTitle: (cropName) => `<strong>Calendar created for ${cropName} crop:</strong><br><br>`,
+                soilResultTitle: "<strong>Advice based on Soil Test Report:</strong><br><br>",
+                processing: "Processing...",
+                getInfo: "Getting information...",
+                getAnswer: "Getting answer...",
+                getAdvice: "Getting advice...",
+                createCalendar: "Creating calendar...",
+                analyzing: "Analyzing...",
+                loadingInfo: "Loading information...",
+                generatingImage: "AI is generating a photo...",
+                boron20_name: "Boron 20%",
+                boron20_desc: "A high-quality, fully water-soluble boron micronutrient. It improves flower and fruit setting, prevents fruit cracking, and enhances crop quality.",
+                boron20_usage: "For spraying: Use 1-2 grams per liter of water. Via drip irrigation: Apply 500g to 1kg per acre depending on soil type.",
+                mycoSpider_name: "Myco Spider",
+                mycoSpider_desc: "A biological insecticide that effectively controls mites and other sucking pests. It is safe for beneficial insects and leaves no chemical residue on crops.",
+                mycoSpider_usage: "For spraying: Mix 2-3 ml per liter of water and spray thoroughly on both sides of the leaves. Repeat after 10-12 days if infestation is high.",
+                aesplVbm_name: "AESPL VBM",
+                aesplVbm_desc: "A unique blend of plant-based vitamins, bio-enzymes, and micronutrients. It accelerates the crop's metabolic processes, leading to vigorous growth and increased yield.",
+                aesplVbm_usage: "For spraying: Mix 1.5 ml per liter of water. Use during the vegetative and flowering stages of the crop.",
+                ayursoul_desc: "An Ayurvedic plant extract-based growth promoter. It enhances the natural immunity of crops and protects them from biotic and abiotic stress.",
+                ayursoul_usage: "For spraying: Mix 2 ml per liter of water. For soil application: Use 1 liter per acre.",
+                ayursoul1Ltr_name: "Ayursoul 1 Ltr",
+                ayursoul500ml_name: "Ayursoul 500ml",
+                ayursoul250ml_name: "Ayursoul 250ml",
+                ayursoul100ml_name: "Ayursoul 100ml",
+                aesplSargassum_name: "AESPL Sargassum",
+                aesplSargassum_desc: "An organic product made from Sargassum seaweed. It contains natural cytokinins, auxins, and gibberellins, which help in root development, tillering, and increasing fruit size.",
+                aesplSargassum_usage: "For spraying: Mix 2-3 ml per liter of water. Through drip: Apply 1 liter per acre.",
+                wellStick_name: "Well-Stick",
+                wellStick_desc: "A high-quality sticker, spreader, and penetrator. When used with any insecticide, fungicide, or fertilizer, it spreads and adheres the solution evenly on the leaves, increasing its effectiveness.",
+                wellStick_usage: "Mix at a rate of 0.5 ml per liter in any spray solution.",
+                oxical_desc: "A balanced mixture of calcium and other essential micronutrients. It strengthens cell walls, improves the storage capacity of fruits, and prevents disorders like blossom end rot.",
+                oxical_usage: "For spraying: Mix 2-3 ml per liter of water. It is particularly beneficial to use during the fruiting stage.",
+                oxical1Ltr_name: "Oxical 1 Ltr",
+                oxical500ml_name: "Oxical 500ml",
+                oxical250ml_name: "Oxical 250ml",
+                oxical100ml_name: "Oxical 100ml",
+            }
+        };
+        let currentLanguage = 'mr';
+
+        // --- LANGUAGE SWITCHING LOGIC ---
+        function switchLanguage(lang) {
+            if (!translations[lang]) return;
+            currentLanguage = lang;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+            
+            document.documentElement.lang = lang;
+
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.dataset.langKey;
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            document.querySelectorAll('[data-lang-key-placeholder]').forEach(el => {
+                const key = el.dataset.langKeyPlaceholder;
+                if (translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+            
+            document.querySelectorAll('[data-lang-key-title]').forEach(el => {
+                const key = el.dataset.langKeyTitle;
+                if (translations[lang][key]) {
+                    el.title = translations[lang][key];
+                }
+            });
+
+            loadProducts();
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                switchLanguage(btn.dataset.lang);
+            });
+        });
+
+        // --- GEMINI API FUNCTION ---
+        async function callGemini(prompt, buttonElement, base64ImageData = null) {
+            const originalText = buttonElement.innerHTML;
+            const lang = currentLanguage;
+            buttonElement.disabled = true;
+            buttonElement.innerHTML = `<span class="spinner"></span><span class="ml-2">${translations[lang].processing}</span>`;
+            
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            
+            let parts = [{ text: prompt }];
+            if (base64ImageData) {
+                parts.push({
+                    inlineData: {
+                        mimeType: "image/jpeg",
+                        data: base64ImageData
+                    }
+                });
+            }
+            const payload = { contents: [{ role: "user", parts: parts }] };
+            let responseText = "उत्तर मिळवण्यात समस्या येत आहे. कृपया पुन्हा प्रयत्न करा.";
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                    responseText = result.candidates[0].content.parts[0].text;
+                }
+            } catch (error) {
+                console.error("Gemini API call failed:", error);
+            } finally {
+                buttonElement.disabled = false;
+                buttonElement.innerHTML = originalText;
+            }
+            return responseText;
+        }
+
+        // --- IMAGEN API FUNCTION ---
+        async function generateImageWithImagen(prompt) {
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
+            const payload = { instances: [{ prompt: prompt }], parameters: { "sampleCount": 1 } };
+            
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!response.ok) {
+                    throw new Error(`Imagen API request failed with status ${response.status}`);
+                }
+                const result = await response.json();
+                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
+                    return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                }
+            } catch (error) {
+                console.error("Imagen API call failed:", error);
+            }
+            return null; // Return null on failure
+        }
+        
+        // --- HELPER FUNCTIONS ---
+        function showMessage(message) {
+            document.getElementById('messageText').textContent = message;
+            document.getElementById('messageBox').style.display = 'flex';
+        }
+        document.getElementById('messageBoxClose').onclick = () => { document.getElementById('messageBox').style.display = 'none'; }
+        window.onclick = (event) => { if (event.target == document.getElementById('messageBox')) document.getElementById('messageBox').style.display = 'none'; }
+
+        function createAccordionItem(id, title, icon, content) {
+            return `<div class="accordion-item"><div class="accordion-header" data-target="#${id}"><div class="flex items-center">${icon}<h3 class="font-semibold text-gray-700 ml-3">${title}</h3></div><svg class="accordion-icon w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div><div id="${id}" class="accordion-content"><div class="accordion-content-inner text-gray-600 text-sm">${content}</div></div></div>`;
+        }
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = document.querySelector(header.dataset.target);
+            if (item.classList.contains('active')) {
+                item.classList.remove('active');
+                content.style.maxHeight = '0';
+            } else {
+                item.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        }
+        
+        // --- IMAGE PREVIEW LOGIC ---
+        let diseaseImageBase64 = null;
+        document.getElementById('diseaseImage').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('imagePreview');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    diseaseImageBase64 = e.target.result.split(',')[1];
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // --- VOICE RECOGNITION LOGIC ---
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onend = () => {
+                document.querySelectorAll('.voice-btn.recording').forEach(btn => btn.classList.remove('recording'));
+            };
+
+            recognition.onerror = (event) => {
+                console.error("Speech recognition error", event.error);
+                showMessage("Speech recognition failed. Please try again.");
+            };
+        } else {
+            console.warn("Speech Recognition not supported in this browser.");
+        }
+
+        function startVoiceRecognition(targetTextareaId, buttonId) {
+            if (!recognition) {
+                showMessage("Voice input is not supported in your browser.");
+                return;
+            }
+            recognition.lang = currentLanguage === 'mr' ? 'mr-IN' : currentLanguage === 'hi' ? 'hi-IN' : 'en-US';
+            const button = document.getElementById(buttonId);
+            if (button.classList.contains('recording')) {
+                recognition.stop();
+                button.classList.remove('recording');
+                return;
+            }
+
+            button.classList.add('recording');
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById(targetTextareaId).value = transcript;
+                button.classList.remove('recording');
+            };
+            recognition.start();
+        }
+
+        document.getElementById('voiceForum').addEventListener('click', () => startVoiceRecognition('forumQuestion', 'voiceForum'));
+        document.getElementById('voiceScheme').addEventListener('click', () => startVoiceRecognition('schemeQuestion', 'voiceScheme'));
+
+
+        // --- AI FEATURES ---
+        // 1. Government Schemes
+        document.getElementById('askScheme').addEventListener('click', async () => {
+            const question = document.getElementById('schemeQuestion').value;
+            if (!question) {
+                showMessage('Please write your question about the scheme.');
+                return;
+            }
+            const prompt = `I am a farmer. My question is: "${question}". Please provide a detailed and accurate answer in simple ${translations[currentLanguage].langName} as a government scheme expert.`;
+            const responseResultDiv = document.getElementById('schemeResponseResult');
+            const responseContainer = document.getElementById('schemeResponseContainer');
+            
+            responseContainer.classList.remove('hidden');
+            responseResultDiv.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].getInfo}</span></div>`;
+
+            const result = await callGemini(prompt, document.getElementById('askScheme'));
+            responseResultDiv.innerHTML = result.replace(/\n/g, '<br>');
+        });
+
+        // 2. AI Agri Assistant (Forum)
+        document.getElementById('askGeminiForum').addEventListener('click', async () => {
+            const question = document.getElementById('forumQuestion').value;
+            if (!question) {
+                showMessage('Please write your question.');
+                return;
+            }
+            const prompt = `I am a farmer. My question is: "${question}". Please provide a detailed answer in simple ${translations[currentLanguage].langName} as an agriculture expert from Agro Escort Solutions Private Limited.`;
+            const responseResultDiv = document.getElementById('forumResponseResult');
+            const responseContainer = document.getElementById('forumResponseContainer');
+            
+            responseContainer.classList.remove('hidden');
+            responseResultDiv.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].getAnswer}</span></div>`;
+
+            const result = await callGemini(prompt, document.getElementById('askGeminiForum'));
+            responseResultDiv.innerHTML = result.replace(/\n/g, '<br>');
+        });
+
+        // 3. Expert Advice (Krishi Doctor)
+        document.getElementById('getAiAdvice').addEventListener('click', async () => {
+            const question = document.getElementById('expertQuestion').value;
+            if (!question) {
+                showMessage('Please write your problem.');
+                return;
+            }
+            const productList = productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ');
+            const prompt = `I am a farmer. My problem is: "${question}". ${diseaseImageBase64 ? 'I have attached a photo, please analyze it and provide an answer.' : ''} As an expert from Agro Escort Solutions Private Limited, please provide a diagnosis and step-by-step solutions in simple ${translations[currentLanguage].langName}. If necessary, you can recommend products from this list: '${productList}'.`;
+            const adviceResultDiv = document.getElementById('aiAdviceResult');
+            const adviceContainer = document.getElementById('aiAdviceContainer');
+            
+            adviceContainer.classList.remove('hidden');
+            adviceResultDiv.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].getAdvice}</span></div>`;
+
+            const result = await callGemini(prompt, document.getElementById('getAiAdvice'), diseaseImageBase64);
+            adviceResultDiv.innerHTML = result.replace(/\n/g, '<br>');
+        });
+        
+        // 4. AI Crop Calendar
+        document.getElementById('generateCalendarBtn').addEventListener('click', async () => {
+            const cropName = document.getElementById('calendarCropInput').value.trim();
+            const sowingDate = document.getElementById('sowingDate').value;
+             if (!cropName) {
+                showMessage('Please enter the crop name.');
+                return;
+            }
+            if (!sowingDate) {
+                showMessage('Please select the sowing date.');
+                return;
+            }
+            const prompt = `I am a farmer and I sowed the ${cropName} crop on ${sowingDate}. Please create a complete weekly work schedule (calendar) for me from sowing to harvesting, according to the climate of the Sambhaji Nagar (Aurangabad), Maharashtra region. It should include information on fertilizers, water, spraying, and other important tasks. Provide the response in ${translations[currentLanguage].langName}.`;
+            
+            const resultContainer = document.getElementById('generatedCalendarResult');
+            resultContainer.classList.remove('hidden');
+            resultContainer.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].createCalendar}</span></div>`;
+            
+            const result = await callGemini(prompt, document.getElementById('generateCalendarBtn'));
+            resultContainer.innerHTML = translations[currentLanguage].calendarResultTitle(cropName) + result.replace(/\n/g, '<br>');
+        });
+
+        // 5. Soil Test Analysis
+        document.getElementById('analyzeSoil').addEventListener('click', async () => {
+            const ph = document.getElementById('soilPh').value;
+            const n = document.getElementById('soilN').value;
+            const p = document.getElementById('soilP').value;
+            const k = document.getElementById('soilK').value;
+
+            if(!ph || !n || !p || !k) {
+                showMessage("Please fill in all the soil test information.");
+                return;
+            }
+            
+            const productList = productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ');
+            const prompt = `According to my soil test report, pH: ${ph}, Nitrogen (N): ${n} kg/ha, Phosphorus (P): ${p} kg/ha, and Potassium (K): ${k} kg/ha. I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. Based on this information, as an expert from Agro Escort Solutions, please tell me: \n1. Which crops (Kharif and Rabi) are most suitable for my land? \n2. How should I manage fertilizers for the main crops? If necessary, you can recommend products from this list: '${productList}'. Please provide the response in ${translations[currentLanguage].langName}.`;
+            
+            const resultContainer = document.getElementById('soilAnalysisResult');
+            resultContainer.classList.remove('hidden');
+            resultContainer.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].analyzing}</span></div>`;
+            
+            const result = await callGemini(prompt, document.getElementById('analyzeSoil'));
+            resultContainer.innerHTML = translations[currentLanguage].soilResultTitle + result.replace(/\n/g, '<br>');
+        });
+
+
+        // --- DYNAMIC CROP GUIDE LOGIC ---
+        document.getElementById('calculateBtn').addEventListener('click', async (e) => {
+            const areaInput = document.getElementById('area').value;
+            const cropName = document.getElementById('cropNameInput').value.trim();
+
+            if (!areaInput || areaInput <= 0) {
+                showMessage('Please enter a valid area.');
+                return;
+            }
+            if (!cropName) {
+                showMessage('Please enter the crop name.');
+                return;
+            }
+
+            let areaInAcres = parseFloat(areaInput);
+            if (document.getElementById('unit').value === 'hectare') areaInAcres *= 2.471;
+
+            const guideContainer = document.getElementById('guide-container');
+            const imageContainer = document.getElementById('guide-image-container');
+            guideContainer.innerHTML = ''; // Clear previous results
+            imageContainer.innerHTML = `<div class="flex items-center text-gray-500"><span class="spinner !border-t-green-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].generatingImage}</span></div>`;
+            document.getElementById('result').classList.remove('hidden');
+
+            // --- Generate Image and Text in Parallel ---
+            const imagePrompt = `A high-quality, realistic photograph of a healthy ${cropName} crop growing in a field, sunny day.`;
+            const textPrompt = `I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. My crop is "${cropName}" and my total area is ${areaInAcres.toFixed(2)} acres. As an expert from Agro Escort Solutions, please provide the following information in simple ${translations[currentLanguage].langName}, in separate sections: 1. **Total Fertilizer Management:** State the required amounts of N, P, and K in kg for my total area. 2. **Improved Crop Varieties:** Suggest some good, high-yielding varieties for my region. 3. **Disease and Pest Management:** Information on major diseases/pests and their control. If necessary, you can recommend products from this list: '${productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ')}'.`;
+
+            const [imageUrl, guideResult] = await Promise.all([
+                generateImageWithImagen(imagePrompt),
+                callGemini(textPrompt, e.target)
+            ]);
+
+            // --- Display Results ---
+            if (imageUrl) {
+                imageContainer.innerHTML = `<img src="${imageUrl}" alt="${cropName}" class="w-full h-full object-cover">`;
+            } else {
+                imageContainer.innerHTML = `<span class="text-red-500">Failed to load image.</span>`;
+            }
+
+            guideContainer.innerHTML = '';
+            const guideContent = guideResult.replace(/\n/g, '<br>');
+            guideContainer.innerHTML += createAccordionItem('ai-guide', translations[currentLanguage].aiGuideTitle(cropName), '<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>', guideContent);
+
+            document.querySelectorAll('#guide-container .accordion-header').forEach(header => {
+                header.addEventListener('click', () => toggleAccordion(header));
+            });
+
+            const firstAccordionHeader = document.querySelector('#guide-container .accordion-header');
+            if(firstAccordionHeader) { toggleAccordion(firstAccordionHeader); }
+        });
+
+
+        // --- TAB SWITCHING LOGIC ---
+        const tabs = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = document.getElementById(tab.dataset.tab);
+                tabContents.forEach(c => c.classList.remove('active'));
+                target.classList.add('active');
+            });
+        });
+        
+        // --- INITIAL LOAD ---
+        function loadProducts() {
+            const container = document.getElementById('products-grid');
+            container.innerHTML = '';
+            const lang = currentLanguage;
+            productKeys.forEach(key => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-lg shadow-sm border flex flex-col';
+                
+                const descKey = key.startsWith('ayursoul') ? 'ayursoul_desc' : key.startsWith('oxical') ? 'oxical_desc' : `${key}_desc`;
+                const usageKey = key.startsWith('ayursoul') ? 'ayursoul_usage' : key.startsWith('oxical') ? 'oxical_usage' : `${key}_usage`;
+
+                card.innerHTML = `
+                    <h3 class="text-lg font-bold text-blue-800">${translations[lang][`${key}_name`]}</h3>
+                    <p class="text-gray-600 my-2 flex-grow text-sm">${translations[lang][descKey]}</p>
+                    <div>
+                        <h4 class="font-semibold text-sm">${translations[lang].productUsageTitle}</h4>
+                        <p class="text-gray-500 text-xs">${translations[lang][usageKey]}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLanguage('mr'); // Set default language to Marathi
+        });
+
+    </script>
+</body>
+</html>
