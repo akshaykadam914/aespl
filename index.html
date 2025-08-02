@@ -148,7 +148,7 @@
                     </button>
                     <button class="tab-button" data-tab="forum">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-6 6v3.586l-1.707 1.707A1 1 0 003 15v1a1 1 0 001 1h12a1 1 0 001-1v-1a1 1 0 00-.293-.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" /></svg>
-                        <span data-lang-key="tabForum">AI कृषी सहायक</span>
+                        <span data-lang-key="tabForum">AESPL कृषी सहायक</span>
                     </button>
                     <button class="tab-button" data-tab="tools">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 011-1h1a2 2 0 100-4H7a1 1 0 01-1-1V7a1 1 0 011-1h3a1 1 0 001-1V4z" /></svg>
@@ -191,7 +191,7 @@
                         </div>
                     </div>
                     <div id="schemes" class="tab-content">
-                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="schemesTitle">AI योजना सहायक</h2>
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="schemesTitle">AESPL योजना सहायक</h2>
                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
                             <h3 class="font-semibold mb-2" data-lang-key="schemesFormTitle">शासकीय योजनेबद्दल माहिती विचारा</h3>
                             <div class="flex items-center gap-2">
@@ -227,7 +227,7 @@
                         </div>
                     </div>
                      <div id="forum" class="tab-content">
-                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="forumTitle">AI कृषी सहायक</h2>
+                        <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="forumTitle">AESPL कृषी सहायक</h2>
                         <div class="bg-gray-50 p-4 rounded-lg mb-6">
                             <h3 class="font-semibold mb-2" data-lang-key="forumFormTitle">तुमचा कोणताही शेतीविषयक प्रश्न विचारा</h3>
                             <div class="flex items-center gap-2">
@@ -246,7 +246,7 @@
                     <div id="tools" class="tab-content">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="bg-gray-50 p-4 rounded-lg">
-                                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="toolsCalendarTitle">✨ AI पीक कॅलेंडर</h2>
+                                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="toolsCalendarTitle">✨ पीक कॅलेंडर</h2>
                                  <div class="space-y-3">
                                      <label for="calendarCropInput" class="text-sm font-medium text-gray-700" data-lang-key="toolsCalendarCropLabel">तुमचे पीक</label>
                                      <input type="text" id="calendarCropInput" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsCalendarCropPlaceholder">
@@ -259,19 +259,30 @@
                             <div class="bg-gray-50 p-4 rounded-lg">
                                 <h2 class="text-xl font-bold text-gray-800 border-b pb-2 mb-4" data-lang-key="toolsSoilTitle">✨ माती परीक्षण विश्लेषण</h2>
                                 <div class="space-y-3">
+                                    <p class="text-sm text-gray-600" data-lang-key="toolsSoilManualLabel">तुमचे रिपोर्टमधील आकडे टाका:</p>
                                     <input type="number" id="soilPh" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilPhPlaceholder">
                                     <input type="number" id="soilN" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilNPlaceholder">
                                     <input type="number" id="soilP" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilPPlaceholder">
                                     <input type="number" id="soilK" class="w-full p-2 border rounded-md" data-lang-key-placeholder="toolsSoilKPlaceholder">
-                                    <button id="analyzeSoil" class="w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="toolsSoilSubmitButton">विश्लेषण करा</button>
-                                    <div id="soilAnalysisResult" class="hidden mt-4 p-4 bg-white border rounded-lg text-sm whitespace-pre-wrap"></div>
                                 </div>
+                                <div class="my-4 text-center">
+                                    <span class="text-gray-500 font-semibold" data-lang-key="toolsSoilOr">किंवा</span>
+                                </div>
+                                <div class="space-y-3">
+                                    <label for="soilReportImage" class="block text-sm font-medium text-gray-700" data-lang-key="toolsSoilUploadLabel">तुमच्या माती परीक्षण अहवालाचा फोटो अपलोड करा:</label>
+                                    <input type="file" id="soilReportImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
+                                    <img id="soilReportImagePreview" src="" alt="Soil Report Preview" class="hidden mt-2 rounded-lg max-h-40 mx-auto"/>
+                                </div>
+                                <div class="mt-4">
+                                    <button id="analyzeSoil" class="w-full gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="toolsSoilSubmitButton">विश्लेषण करा</button>
+                                </div>
+                                <div id="soilAnalysisResult" class="hidden mt-4 p-4 bg-white border rounded-lg text-sm whitespace-pre-wrap"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <footer class="text-center text-sm text-gray-500 mt-8" data-lang-key="footerText">
-                    © 2025 Agro Escort Solutions Private Limited. सर्व हक्क राखीव.
+                    © 2025 Agro Escort Solutions Private Limited. All Rights Reserved.
                 </footer>
             </div>
         </div>
@@ -296,14 +307,14 @@
 
         const translations = {
             mr: {
-                companyName: "Agro Escort Solutions Private Limited",
+                companyName: "अग्रो एस्कॉर्ट सोल्यूशन्स प्राइवेट लिमिटेड",
                 appTitle: "संपूर्ण शेतकरी मार्गदर्शक",
-                footerText: "© 2025 Agro Escort Solutions Private Limited. सर्व हक्क राखीव.",
+                footerText: "© २०२५ अग्रो एस्कॉर्ट सोल्यूशन्स प्राइवेट लिमिटेड.सर्व हक्क राखीव.",
                 tabGuide: "पीक मार्गदर्शक",
                 tabProducts: "आमची उत्पादने",
                 tabSchemes: "सरकारी योजना",
                 tabExpert: "कृषी डॉक्टर",
-                tabForum: "AI कृषी सहायक",
+                tabForum: "Aespl कृषी सहायक",
                 tabTools: "साधने",
                 guideFormTitle: "तुमची माहिती भरा",
                 guideAreaLabel: "तुमचे एकूण क्षेत्रफळ",
@@ -314,7 +325,7 @@
                 guideCropPlaceholder: "उदा. कापूस, सोयाबीन, टोमॅटो",
                 guideSubmitButton: "माहिती मिळवा",
                 productsTitle: "आमची कृषी उत्पादने",
-                schemesTitle: "AI योजना सहायक",
+                schemesTitle: "Aespl योजना सहायक",
                 schemesFormTitle: "शासकीय योजनेबद्दल माहिती विचारा",
                 schemesFormPlaceholder: "उदा. पीएम किसान योजनेसाठी पात्रता काय आहे?",
                 schemesSubmitButton: "माहिती मिळवा",
@@ -329,13 +340,16 @@
                 forumFormTitle: "तुमचा कोणताही शेतीविषयक प्रश्न विचारा",
                 forumFormPlaceholder: "उदा. रब्बी हंगामासाठी कोणती पिके फायदेशीर ठरतील?",
                 forumSubmitButton: "उत्तर मिळवा",
-                forumResponseTitle: "✨ AI ने दिलेले उत्तर",
-                toolsCalendarTitle: "✨ AI पीक कॅलेंडर",
+                forumResponseTitle: "✨ Aespl ने दिलेले उत्तर",
+                toolsCalendarTitle: "✨ पीक कॅलेंडर",
                 toolsCalendarCropLabel: "तुमचे पीक",
                 toolsCalendarCropPlaceholder: "उदा. गहू, हरभरा",
                 toolsCalendarDateLabel: "पेरणीची तारीख निवडा",
                 toolsCalendarSubmitButton: "कॅलेंडर तयार करा",
                 toolsSoilTitle: "✨ माती परीक्षण विश्लेषण",
+                toolsSoilManualLabel: "तुमचे रिपोर्टमधील आकडे टाका:",
+                toolsSoilOr: "किंवा",
+                toolsSoilUploadLabel: "तुमच्या माती परीक्षण अहवालाचा फोटो अपलोड करा:",
                 toolsSoilPhPlaceholder: "मातीचा pH (उदा. 7.2)",
                 toolsSoilNPlaceholder: "नत्र (N) kg/ha (उदा. 250)",
                 toolsSoilPPlaceholder: "स्फुरद (P) kg/ha (उदा. 20)",
@@ -344,9 +358,11 @@
                 voiceInputTitle: "बोलून विचारा",
                 langName: "मराठी",
                 productUsageTitle: "वापर कसा करावा:",
-                aiGuideTitle: (cropName) => `"${cropName}" पिकासाठी AI सल्ला`,
+                aiGuideTitle: (cropName) => `"${cropName}" पिकासाठी Aespl चा सल्ला`,
                 calendarResultTitle: (cropName) => `<strong>${cropName} पिकासाठी तयार केलेले कॅलेंडर:</strong><br><br>`,
                 soilResultTitle: "<strong>माती परीक्षण अहवालानुसार सल्ला:</strong><br><br>",
+                soilResultFromImageTitle: "<strong>फोटोवरून केलेल्या विश्लेषणानुसार सल्ला:</strong><br><br>",
+                soilAnalysisError: "कृपया आकडे टाका किंवा अहवालाचा फोटो अपलोड करा.",
                 processing: "प्रक्रिया होत आहे...",
                 getInfo: "माहिती मिळवत आहे...",
                 getAnswer: "उत्तर मिळवत आहे...",
@@ -354,7 +370,7 @@
                 createCalendar: "कॅलेंडर तयार होत आहे...",
                 analyzing: "विश्लेषण होत आहे...",
                 loadingInfo: "माहिती लोड होत आहे...",
-                generatingImage: "AI फोटो तयार करत आहे...",
+                generatingImage: "Aespl ला मिळालेला फोटो लोड होत आहे...",
                 boron20_name: "बोरॉन २०%",
                 boron20_desc: "हे एक उच्च-गुणवत्तेचे, पाण्यात पूर्णपणे विरघळणारे बोरॉनयुक्त सूक्ष्म अन्नद्रव्य आहे. हे फुलांची आणि फळांची सेटिंग सुधारते, फळांना तडे जाण्यापासून वाचवते आणि पिकांची गुणवत्ता वाढवते.",
                 boron20_usage: "फवारणीसाठी: १-२ ग्रॅम प्रति लिटर पाण्यात मिसळून वापरा. ठिबक सिंचनाद्वारे: ५०० ग्रॅम ते १ किलो प्रति एकर जमिनीच्या प्रकारानुसार द्या.",
@@ -387,12 +403,12 @@
                 companyName: "एग्रो एस्कॉर्ट सॉल्यूशंस प्राइवेट लिमिटेड",
                 appTitle: "संपूर्ण किसान गाइड",
                 footerText: "© 2025 एग्रो एस्कॉर्ट सॉल्यूशंस प्राइवेट लिमिटेड। सर्वाधिकार सुरक्षित।",
-                appSubtitle: "आपका AI कृषि सहायक",
+                appSubtitle: "आपका Aespl कृषि सहायक",
                 tabGuide: "फ़सल गाइड",
                 tabProducts: "हमारे उत्पाद",
                 tabSchemes: "सरकारी योजनाएं",
                 tabExpert: "कृषि डॉक्टर",
-                tabForum: "AI कृषि सहायक",
+                tabForum: "Aespl कृषि सहायक",
                 tabTools: "उपकरण",
                 guideFormTitle: "अपनी जानकारी भरें",
                 guideAreaLabel: "आपका कुल क्षेत्रफल",
@@ -403,7 +419,7 @@
                 guideCropPlaceholder: "उदा. कपास, सोयाबीन, टमाटर",
                 guideSubmitButton: "जानकारी प्राप्त करें",
                 productsTitle: "हमारे कृषि उत्पाद",
-                schemesTitle: "AI योजना सहायक",
+                schemesTitle: "Aespl योजना सहायक",
                 schemesFormTitle: "सरकारी योजना के बारे में पूछें",
                 schemesFormPlaceholder: "उदा. पीएम किसान योजना के लिए पात्रता क्या है?",
                 schemesSubmitButton: "जानकारी प्राप्त करें",
@@ -414,17 +430,20 @@
                 expertImageLabel: "रोग का फ़ोटो अपलोड करें (वैकल्पिक)",
                 expertSubmitButton: "निदान और सलाह पाएं",
                 expertResponseTitle: "✨ विशेषज्ञों द्वारा दी गई सलाह",
-                forumTitle: "AI कृषि सहायक",
+                forumTitle: "Aespl कृषि सहायक",
                 forumFormTitle: "अपना कोई भी कृषि संबंधी प्रश्न पूछें",
                 forumFormPlaceholder: "उदा. रबी सीजन के लिए कौन सी फसलें फायदेमंद हैं?",
                 forumSubmitButton: "उत्तर पाएं",
-                forumResponseTitle: "✨ AI द्वारा दिया गया उत्तर",
-                toolsCalendarTitle: "✨ AI फ़सल कैलेंडर",
+                forumResponseTitle: "✨ Aespl द्वारा दिया गया उत्तर",
+                toolsCalendarTitle: "✨ Aespl फ़सल कैलेंडर",
                 toolsCalendarCropLabel: "आपकी फ़सल",
                 toolsCalendarCropPlaceholder: "उदा. गेहूं, चना",
                 toolsCalendarDateLabel: "बुवाई की तारीख चुनें",
                 toolsCalendarSubmitButton: "कैलेंडर बनाएं",
                 toolsSoilTitle: "✨ मिट्टी परीक्षण विश्लेषण",
+                toolsSoilManualLabel: "अपनी रिपोर्ट से मान दर्ज करें:",
+                toolsSoilOr: "या",
+                toolsSoilUploadLabel: "अपनी मिट्टी परीक्षण रिपोर्ट का फोटो अपलोड करें:",
                 toolsSoilPhPlaceholder: "मिट्टी का pH (उदा. 7.2)",
                 toolsSoilNPlaceholder: "नाइट्रोजन (N) kg/ha (उदा. 250)",
                 toolsSoilPPlaceholder: "फॉस्फोरस (P) kg/ha (उदा. 20)",
@@ -433,9 +452,11 @@
                 voiceInputTitle: "बोलकर पूछें",
                 langName: "हिंदी",
                 productUsageTitle: "उपयोग कैसे करें:",
-                aiGuideTitle: (cropName) => `"${cropName}" फ़सल के लिए AI सलाह`,
+                aiGuideTitle: (cropName) => `"${cropName}" फ़सल के लिए Aespl की सलाह`,
                 calendarResultTitle: (cropName) => `<strong>${cropName} फ़सल के लिए बनाया गया कैलेंडर:</strong><br><br>`,
                 soilResultTitle: "<strong>मिट्टी परीक्षण रिपोर्ट के अनुसार सलाह:</strong><br><br>",
+                soilResultFromImageTitle: "<strong>फोटो से किए गए विश्लेषण के अनुसार सलाह:</strong><br><br>",
+                soilAnalysisError: "कृपया मान दर्ज करें या रिपोर्ट का फोटो अपलोड करें।",
                 processing: "प्रगति पर है...",
                 getInfo: "जानकारी मिल रही है...",
                 getAnswer: "उत्तर मिल रहा है...",
@@ -443,7 +464,7 @@
                 createCalendar: "कैलेंडर बन रहा है...",
                 analyzing: "विश्लेषण हो रहा है...",
                 loadingInfo: "जानकारी लोड हो रही है...",
-                generatingImage: "AI फोटो बना रहा है...",
+                generatingImage: "Aespl को मिला हुआ फोटो लोड हो रहा है...",
                 boron20_name: "बोरॉन २०%",
                 boron20_desc: "यह एक उच्च-गुणवत्ता, पानी में पूरी तरह से घुलनशील बोरॉन युक्त सूक्ष्म पोषक तत्व है। यह फूलों और फलों की सेटिंग में सुधार करता है, फलों को फटने से बचाता है और फसल की गुणवत्ता बढ़ाता है।",
                 boron20_usage: "छिड़काव के लिए: 1-2 ग्राम प्रति लीटर पानी में मिलाएं। ड्रिप सिंचाई के माध्यम से: 500 ग्राम से 1 किलो प्रति एकड़ मिट्टी के प्रकार के अनुसार दें।",
@@ -476,12 +497,12 @@
                 companyName: "Agro Escort Solutions Private Limited",
                 appTitle: "Complete Farmer Guide",
                 footerText: "© 2025 Agro Escort Solutions Private Limited. All Rights Reserved.",
-                appSubtitle: "Your AI Agri Assistant",
+                appSubtitle: "Your Aespl Agri Assistant",
                 tabGuide: "Crop Guide",
                 tabProducts: "Our Products",
                 tabSchemes: "Govt. Schemes",
                 tabExpert: "Agri Doctor",
-                tabForum: "AI Agri Assistant",
+                tabForum: "Aespl Agri Assistant",
                 tabTools: "Tools",
                 guideFormTitle: "Fill Your Information",
                 guideAreaLabel: "Your Total Area",
@@ -492,7 +513,7 @@
                 guideCropPlaceholder: "e.g., Cotton, Soybean, Tomato",
                 guideSubmitButton: "Get Information",
                 productsTitle: "Our Agri Products",
-                schemesTitle: "AI Scheme Assistant",
+                schemesTitle: "Aespl Scheme Assistant",
                 schemesFormTitle: "Ask About a Government Scheme",
                 schemesFormPlaceholder: "e.g., What is the eligibility for the PM Kisan scheme?",
                 schemesSubmitButton: "Get Information",
@@ -503,17 +524,20 @@
                 expertImageLabel: "Upload disease photo (Optional)",
                 expertSubmitButton: "Get Diagnosis and Advice",
                 expertResponseTitle: "✨ Advice from the Expert",
-                forumTitle: "AI Agri Assistant",
+                forumTitle: "Aespl Agri Assistant",
                 forumFormTitle: "Ask any agriculture-related question",
                 forumFormPlaceholder: "e.g., Which crops are profitable for the Rabi season?",
                 forumSubmitButton: "Get Answer",
-                forumResponseTitle: "✨ Answer from AI",
-                toolsCalendarTitle: "✨ AI Crop Calendar",
+                forumResponseTitle: "✨ Answer from Aespl",
+                toolsCalendarTitle: "✨ Aespl Crop Calendar",
                 toolsCalendarCropLabel: "Your Crop",
                 toolsCalendarCropPlaceholder: "e.g., Wheat, Gram",
                 toolsCalendarDateLabel: "Select Sowing Date",
                 toolsCalendarSubmitButton: "Create Calendar",
                 toolsSoilTitle: "✨ Soil Test Analysis",
+                toolsSoilManualLabel: "Enter values from your report:",
+                toolsSoilOr: "OR",
+                toolsSoilUploadLabel: "Upload a photo of your soil test report:",
                 toolsSoilPhPlaceholder: "Soil pH (e.g., 7.2)",
                 toolsSoilNPlaceholder: "Nitrogen (N) kg/ha (e.g., 250)",
                 toolsSoilPPlaceholder: "Phosphorus (P) kg/ha (e.g., 20)",
@@ -522,9 +546,11 @@
                 voiceInputTitle: "Ask with Voice",
                 langName: "English",
                 productUsageTitle: "How to use:",
-                aiGuideTitle: (cropName) => `AI Advice for "${cropName}" Crop`,
+                aiGuideTitle: (cropName) => `Aespl Advice for "${cropName}" Crop`,
                 calendarResultTitle: (cropName) => `<strong>Calendar created for ${cropName} crop:</strong><br><br>`,
                 soilResultTitle: "<strong>Advice based on Soil Test Report:</strong><br><br>",
+                soilResultFromImageTitle: "<strong>Advice based on Photo Analysis:</strong><br><br>",
+                soilAnalysisError: "Please either enter the values or upload a photo of the report.",
                 processing: "Processing...",
                 getInfo: "Getting information...",
                 getAnswer: "Getting answer...",
@@ -532,7 +558,7 @@
                 createCalendar: "Creating calendar...",
                 analyzing: "Analyzing...",
                 loadingInfo: "Loading information...",
-                generatingImage: "AI is generating a photo...",
+                generatingImage: "Aespl is generating a photo...",
                 boron20_name: "Boron 20%",
                 boron20_desc: "A high-quality, fully water-soluble boron micronutrient. It improves flower and fruit setting, prevents fruit cracking, and enhances crop quality.",
                 boron20_usage: "For spraying: Use 1-2 grams per liter of water. Via drip irrigation: Apply 500g to 1kg per acre depending on soil type.",
@@ -650,31 +676,6 @@
             }
             return responseText;
         }
-
-        // --- IMAGEN API FUNCTION ---
-        async function generateImageWithImagen(prompt) {
-            const apiKey = "AIzaSyBVi29S7ybnQ2tRxqb5g5yy5HcD8mx20Ec";
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
-            const payload = { instances: [{ prompt: prompt }], parameters: { "sampleCount": 1 } };
-            
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!response.ok) {
-                    throw new Error(`Imagen API request failed with status ${response.status}`);
-                }
-                const result = await response.json();
-                if (result.predictions && result.predictions.length > 0 && result.predictions[0].bytesBase64Encoded) {
-                    return `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
-                }
-            } catch (error) {
-                console.error("Imagen API call failed:", error);
-            }
-            return null; // Return null on failure
-        }
         
         // --- HELPER FUNCTIONS ---
         function showMessage(message) {
@@ -711,6 +712,21 @@
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                     diseaseImageBase64 = e.target.result.split(',')[1];
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        let soilReportImageBase64 = null;
+        document.getElementById('soilReportImage').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('soilReportImagePreview');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    soilReportImageBase64 = e.target.result.split(',')[1];
                 };
                 reader.readAsDataURL(file);
             }
@@ -847,23 +863,31 @@
             const n = document.getElementById('soilN').value;
             const p = document.getElementById('soilP').value;
             const k = document.getElementById('soilK').value;
+            const productList = productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ');
 
-            if(!ph || !n || !p || !k) {
-                showMessage("Please fill in all the soil test information.");
+            let prompt = '';
+            let resultTitle = '';
+            let useImage = false;
+
+            if (soilReportImageBase64) {
+                prompt = `Analyze the attached soil test report image. Extract the values for pH, Nitrogen (N), Phosphorus (P), and Potassium (K). Based on these values and my location (Sambhaji Nagar, Maharashtra), as an expert from Agro Escort Solutions, please tell me: \n1. Which crops (Kharif and Rabi) are most suitable for my land? \n2. How should I manage fertilizers for the main crops? If necessary, you can recommend products from this list: '${productList}'. Please provide the response in ${translations[currentLanguage].langName}.`;
+                resultTitle = translations[currentLanguage].soilResultFromImageTitle;
+                useImage = true;
+            } else if (ph && n && p && k) {
+                prompt = `According to my soil test report, pH: ${ph}, Nitrogen (N): ${n} kg/ha, Phosphorus (P): ${p} kg/ha, and Potassium (K): ${k} kg/ha. I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. Based on this information, as an expert from Agro Escort Solutions, please tell me: \n1. Which crops (Kharif and Rabi) are most suitable for my land? \n2. How should I manage fertilizers for the main crops? If necessary, you can recommend products from this list: '${productList}'. Please provide the response in ${translations[currentLanguage].langName}.`;
+                resultTitle = translations[currentLanguage].soilResultTitle;
+            } else {
+                showMessage(translations[currentLanguage].soilAnalysisError);
                 return;
             }
-            
-            const productList = productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ');
-            const prompt = `According to my soil test report, pH: ${ph}, Nitrogen (N): ${n} kg/ha, Phosphorus (P): ${p} kg/ha, and Potassium (K): ${k} kg/ha. I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. Based on this information, as an expert from Agro Escort Solutions, please tell me: \n1. Which crops (Kharif and Rabi) are most suitable for my land? \n2. How should I manage fertilizers for the main crops? If necessary, you can recommend products from this list: '${productList}'. Please provide the response in ${translations[currentLanguage].langName}.`;
             
             const resultContainer = document.getElementById('soilAnalysisResult');
             resultContainer.classList.remove('hidden');
             resultContainer.innerHTML = `<div class="flex items-center"><span class="spinner !border-t-indigo-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].analyzing}</span></div>`;
             
-            const result = await callGemini(prompt, document.getElementById('analyzeSoil'));
-            resultContainer.innerHTML = translations[currentLanguage].soilResultTitle + result.replace(/\n/g, '<br>');
+            const result = await callGemini(prompt, document.getElementById('analyzeSoil'), useImage ? soilReportImageBase64 : null);
+            resultContainer.innerHTML = resultTitle + result.replace(/\n/g, '<br>');
         });
-
 
         // --- DYNAMIC CROP GUIDE LOGIC ---
         document.getElementById('calculateBtn').addEventListener('click', async (e) => {
