@@ -93,7 +93,7 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .main-banner {
-            height: 200px;
+            height: 150px;
             background: linear-gradient(to right, rgb(22 163 74), rgb(34 197 94));
             background-size: cover;
             display: flex;
@@ -103,17 +103,6 @@
             text-align: center;
             color: white;
             position: relative;
-        }
-        .guide-crop-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            background-color: #e5e7eb;
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         .scrollbar-hide::-webkit-scrollbar {
             display: none;
@@ -130,18 +119,17 @@
     <div id="app-container" class="container mx-auto max-w-5xl">
          <div class="main-card p-0 sm:p-0">
             <div class="main-banner">
-                <div id="lang-selector" class="lang-selector absolute top-2 right-5 z-10 flex gap-2">
+                <div id="lang-selector" class="lang-selector absolute top-2 right-2 z-10 flex gap-2">
                     <button class="lang-btn active" data-lang="mr">मराठी</button>
                     <button class="lang-btn" data-lang="hi">हिंदी</button>
                     <button class="lang-btn" data-lang="en">English</button>
                 </div>
-                </br>
                 <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold" data-lang-key="companyName">Agro Escort Solutions Private Limited</h1>
                 <p class="text-2xl sm:text-3xl lg:text-4xl font-bold mt-1" data-lang-key="appTitle">संपूर्ण शेतकरी मार्गदर्शक</p>
             </div>
             <div class="p-4 sm:p-6">
                 <!-- Tabs -->
-                <div class="flex overflow-x-auto pb-4 scrollbar-hide xl:justify-center xl:overflow-visible xl:pb-0 gap-2 sm:gap-3 mb-6">
+                <div class="flex overflow-x-auto pb-4 scrollbar-hide lg:justify-center lg:overflow-visible lg:pb-0 gap-2 sm:gap-3 mb-6">
                     <button class="tab-button active" data-tab="guide">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M17.293 4.293a1 1 0 011.414 1.414l-13 13A1 1 0 013 18H2a1 1 0 01-1-1v-1a1 1 0 01.293-.707l10-10 3-3a1 1 0 011.414 0zM9 13.586V12a1 1 0 112 0v1.586l-1 1-1-1z" /></svg>
                         <span data-lang-key="tabGuide">पीक मार्गदर्शक</span>
@@ -170,8 +158,8 @@
                 <!-- Tab Content -->
                 <div id="tab-contents">
                     <div id="guide" class="tab-content active">
-                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <div class="space-y-4">
+                        <div class="space-y-6">
+                            <div class="space-y-4 bg-gray-50 p-4 rounded-lg">
                                 <h2 class="text-xl font-bold text-gray-800 marathi border-b pb-2" data-lang-key="guideFormTitle">तुमची माहिती भरा</h2>
                                 <div>
                                     <label for="area" class="block text-sm font-medium text-gray-700" data-lang-key="guideAreaLabel">तुमचे एकूण क्षेत्रफळ</label>
@@ -192,9 +180,6 @@
                                 </div>
                             </div>
                             <div id="result" class="hidden">
-                                <div id="guide-image-container" class="guide-crop-image">
-                                    <span data-lang-key="generatingImage">आम्ही काही क्षणा मधे तुमचे एकूण क्षेत्रफळ आणि तुमच्या पिकानुसार माहिती देत आहोत...</span>
-                                </div>
                                 <div id="guide-container" class="border border-gray-200 rounded-lg overflow-hidden"></div>
                             </div>
                         </div>
@@ -232,7 +217,7 @@
                                 <input type="file" id="diseaseImage" accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"/>
                                  <img id="imagePreview" src="" alt="Image Preview" class="hidden mt-2 rounded-lg max-h-40"/>
                             </div>
-                            <button id="getAiAdvice" class="w-full bg-green-600 hover:bg-green-700 mt-4 gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="expertSubmitButton">
+                            <button id="getAiAdvice" class="w-full mt-4 gemini-btn font-bold py-2 px-4 rounded-md flex items-center justify-center" data-lang-key="expertSubmitButton">
                                 निदान आणि सल्ला मिळवा
                             </button>
                         </div>
@@ -286,7 +271,7 @@
                     </div>
                 </div>
                 <footer class="text-center text-sm text-gray-500 mt-8" data-lang-key="footerText">
-                    © 2025 Agro Escort Solutions Private Limited. All Rights Reserved.
+                    © 2025 Agro Escort Solutions Private Limited. सर्व हक्क राखीव.
                 </footer>
             </div>
         </div>
@@ -311,7 +296,7 @@
 
         const translations = {
             mr: {
-                companyName: "अग्रो एस्कॉर्ट सोल्यूशन्स प्राइवेट लिमिटेड ",
+                companyName: "Agro Escort Solutions Private Limited",
                 appTitle: "संपूर्ण शेतकरी मार्गदर्शक",
                 footerText: "© 2025 Agro Escort Solutions Private Limited. सर्व हक्क राखीव.",
                 tabGuide: "पीक मार्गदर्शक",
@@ -898,26 +883,14 @@
             if (document.getElementById('unit').value === 'hectare') areaInAcres *= 2.471;
 
             const guideContainer = document.getElementById('guide-container');
-            const imageContainer = document.getElementById('guide-image-container');
-            guideContainer.innerHTML = ''; // Clear previous results
-            imageContainer.innerHTML = `<div class="flex items-center text-gray-500"><span class="spinner !border-t-green-500 !border-gray-300"></span><span class="ml-2">${translations[currentLanguage].generatingImage}</span></div>`;
+            guideContainer.innerHTML = `<div class="p-4 text-center">${translations[currentLanguage].loadingInfo}</div>`;
             document.getElementById('result').classList.remove('hidden');
 
-            // --- Generate Image and Text in Parallel ---
-            const imagePrompt = `A high-quality, realistic photograph of a healthy ${cropName} crop growing in a field, sunny day.`;
-            const textPrompt = `I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. My crop is "${cropName}" and my total area is ${areaInAcres.toFixed(2)} acres. As an expert from Agro Escort Solutions, please provide the following information in simple ${translations[currentLanguage].langName}, in separate sections: 1. **Total Fertilizer Management:** State the required amounts of N, P, and K in kg for my total area. 2. **Improved Crop Varieties:** Suggest some good, high-yielding varieties for my region. 3. **Disease and Pest Management:** Information on major diseases/pests and their control. If necessary, you can recommend products from this list: '${productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ')}'.`;
+            const productList = productKeys.map(key => translations[currentLanguage][`${key}_name`]).join(', ');
 
-            const [imageUrl, guideResult] = await Promise.all([
-                generateImageWithImagen(imagePrompt),
-                callGemini(textPrompt, e.target)
-            ]);
+            const textPrompt = `I am a farmer from Sambhaji Nagar (Aurangabad), Maharashtra. My crop is "${cropName}" and my total area is ${areaInAcres.toFixed(2)} acres. As an expert from Agro Escort Solutions, please provide the following information in simple ${translations[currentLanguage].langName}, in separate sections: 1. **Total Fertilizer Management:** State the required amounts of N, P, and K in kg for my total area. 2. **Improved Crop Varieties:** Suggest some good, high-yielding varieties for my region. 3. **Disease and Pest Management:** Information on major diseases/pests and their control. If necessary, you can recommend products from this list: '${productList}'.`;
 
-            // --- Display Results ---
-            if (imageUrl) {
-                imageContainer.innerHTML = `<img src="${imageUrl}" alt="${cropName}" class="w-full h-full object-cover">`;
-            } else {
-                imageContainer.innerHTML = `<span class="text-red-500">Failed to load image.</span>`;
-            }
+            const guideResult = await callGemini(textPrompt, e.target);
 
             guideContainer.innerHTML = '';
             const guideContent = guideResult.replace(/\n/g, '<br>');
