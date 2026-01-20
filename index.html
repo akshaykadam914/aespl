@@ -638,8 +638,10 @@
             buttonElement.disabled = true;
             buttonElement.innerHTML = `<span class="spinner"></span><span class="ml-2">${translations[lang].processing}</span>`;
             
-            const apiKey = "AIzaSyCYLs9yPRpYaCqherkDAvzCkDYf7WJPU94"; 
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            // Gemini API config
+            const apiKey = "AIzaSyCYLs9yPRpYaCqherkDAvzCkDYf7WJPU94";
+            const model = "gemini-2.5-flash";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
             
             let parts = [{ text: prompt }];
             if (base64ImageData) {
@@ -661,7 +663,8 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
+                    const errorText = await response.text().catch(() => "");
+                    throw new Error(`API request failed with status ${response.status}. ${errorText}`);
                 }
                 
                 const result = await response.json();
